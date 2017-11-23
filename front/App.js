@@ -5,18 +5,32 @@ import {
   Text,
   View
 } from 'react-native';
-import Meteor from 'react-native-meteor';
-
-const SERVER_URL = 'http://10.0.2.46:3000';
+import Meteor, { createContainer } from 'react-native-meteor';
 
 
+const SERVER_URL = 'ws://10.0.2.46:3000/websocket';
+
+console.log('hola estoy en app.js de front');
 
 class App extends Component {
-
+  //pour le serveur
   componentWillMount() {
-    Meteor.connect(SERVER_URL);  
+    Meteor.connect(SERVER_URL); 
+     console.log("Coucou toto") ; 
   }
 
+
+  // ADDED
+  handleAddItem() {
+    //console.log('TODO: Handle Add Item kjlkh');
+    const name = Math.floor(Math.random() * 10); // just generate some random number
+    Meteor.call('Items.addOne', { name }, (err, res) => {
+    // Do whatever you want with the response
+    console.log('Items.addOne', err, res);
+    });
+  } 
+
+ 
 
   render() {
     return (
